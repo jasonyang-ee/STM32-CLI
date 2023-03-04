@@ -42,6 +42,7 @@ set(EXECUTABLE                      ${CMAKE_PROJECT_NAME})
 #
 set(sources_SRCS
     # Put here your source files, one in each line, relative to CMakeLists.txt file location
+	${PROJ_PATH}/Core/Src/LED.cpp
 	${PROJ_PATH}/Core/Src/main.cpp
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_msp.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_it.c

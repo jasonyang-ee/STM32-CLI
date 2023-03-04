@@ -17,7 +17,7 @@
  */
 
 #include "main.h"
-
+#include "LED.h"
 #include "embedded_cli.h"
 
 UART_HandleTypeDef huart2;
@@ -26,12 +26,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 
-void writChar(EmdeddedCli *, char);
-
-EmbeddedCli *cli = embeddedCliNewDefault();
-
-EmbeddedCliConfig *config = embeddedCliDefaultConfig();
-config->maxBindingCount = 16;
+LED led_red{}, led_green{}, led_blue1{}, led_blue2{};
 
 /**
  * @brief  The application entry point.
@@ -51,7 +46,6 @@ int main(void) {
     }
 }
 
-void writChar(EmdeddedCli *embeddedcli, char c) { cli->writeChar = writeChar; }
 
 /**
  * @brief System Clock Configuration

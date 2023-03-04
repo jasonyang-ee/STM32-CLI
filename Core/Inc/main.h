@@ -7,7 +7,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2022 STMicroelectronics.
+ * Copyright (c) 2023 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -26,6 +26,8 @@ extern "C" {
 
 #include "stm32l4xx_hal.h"
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 void Error_Handler(void);
 
 #define MCO_Pin GPIO_PIN_0
@@ -38,8 +40,6 @@ void Error_Handler(void);
 #define SWCLK_GPIO_Port GPIOA
 #define VCP_RX_Pin GPIO_PIN_15
 #define VCP_RX_GPIO_Port GPIOA
-#define LD3_Pin GPIO_PIN_3
-#define LD3_GPIO_Port GPIOB
 
 #ifdef __cplusplus
 }

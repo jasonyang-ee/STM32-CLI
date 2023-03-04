@@ -45,6 +45,7 @@ set(sources_SRCS
 	${PROJ_PATH}/Core/Src/LED.cpp
 	${PROJ_PATH}/Core/Src/main.cpp
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_msp.c
+	${PROJ_PATH}/Core/Src/stm32l4xx_hal_timebase_tim.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_it.c
 	${PROJ_PATH}/Core/Src/syscalls.c
 	${PROJ_PATH}/Core/Src/sysmem.c

@@ -95,7 +95,7 @@ void LED::setScale(uint16_t value) { m_scale = value; }
  * @param value
  */
 void LED::setLevel(uint16_t value) {
-    m_level = value;
+    m_level = 64000 * value / 100;
     *m_port = m_level / m_scale;
 }
 
@@ -109,7 +109,7 @@ void LED::scheduler() {
     // Breathing LED Logic
     if (m_breath_toggle) {
         if (++m_breath_itr < 25)
-            m_level = m_breath[m_breath_itr];
+            m_level = 64000 * m_breath[m_breath_itr] / 100;
         else
             m_breath_itr = 0;
 

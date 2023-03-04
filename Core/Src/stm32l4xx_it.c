@@ -6,7 +6,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2022 STMicroelectronics.
+ * Copyright (c) 2023 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -19,6 +19,9 @@
 #include "stm32l4xx_it.h"
 
 #include "main.h"
+
+extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim1;
 
 /**
  * @brief This function handles Non maskable interrupt.
@@ -78,4 +81,16 @@ void PendSV_Handler(void) {}
 /**
  * @brief This function handles System tick timer.
  */
-void SysTick_Handler(void) { HAL_IncTick(); }
+void SysTick_Handler(void) {}
+
+/**
+ * @brief This function handles TIM1 update interrupt and TIM16 global
+ * interrupt.
+ */
+void TIM1_UP_TIM16_IRQHandler(void) { HAL_TIM_IRQHandler(&htim1); }
+
+/**
+ * @brief This function handles TIM6 global interrupt, DAC channel1 and channel2
+ * underrun error interrupts.
+ */
+void TIM6_DAC_IRQHandler(void) { HAL_TIM_IRQHandler(&htim6); }

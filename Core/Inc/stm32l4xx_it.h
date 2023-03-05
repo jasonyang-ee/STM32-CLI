@@ -1,4 +1,4 @@
-
+/* USER CODE BEGIN Header */
 /**
  ******************************************************************************
  * @file    stm32l4xx_it.h
@@ -15,14 +15,37 @@
  *
  ******************************************************************************
  */
+/* USER CODE END Header */
 
-#ifndef __STM32L4xx_IT_H
-#define __STM32L4xx_IT_H
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef CORE_INC_STM32L4XX_IT
+#define CORE_INC_STM32L4XX_IT
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
+
+/* USER CODE END ET */
+
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
+
+/* USER CODE END EC */
+
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
+
+/* USER CODE END EM */
+
+/* Exported functions prototypes ---------------------------------------------*/
 void NMI_Handler(void);
 void HardFault_Handler(void);
 void MemManage_Handler(void);
@@ -32,11 +55,16 @@ void SVC_Handler(void);
 void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
-void TIM1_UP_TIM16_IRQHandler(void);
-void TIM6_DAC_IRQHandler(void);
+void DMA1_Channel2_IRQHandler(void);
+void DMA1_Channel6_IRQHandler(void);
+void TIM2_IRQHandler(void);
+void USART2_IRQHandler(void);
+/* USER CODE BEGIN EFP */
+
+/* USER CODE END EFP */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif    /* CORE_INC_STM32L4XX_IT */

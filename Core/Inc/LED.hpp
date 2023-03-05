@@ -1,38 +1,36 @@
-#ifndef SRC_LED_H_
-#define SRC_LED_H_
+#ifndef CORE_INC_LED
+#define CORE_INC_LED
 
 #include "main.h"
 
 class LED {
    public:
-    LED();
+    LED(uint16_t, uint16_t, uint16_t);
     virtual ~LED();
 
-    // Setting
-    void setPort(__IO uint32_t *);
+    void setCCR(__IO uint32_t *);
     void setScale(uint16_t);
     void setLevel(uint16_t);
 
-    // Basic
     void on();
     void off();
     void half();
     void toggle();
-	void set(bool);
+    void set(bool);
 
-    // Time Based for 20Hz Scheduling
     void scheduler();
 
-    // Toggle for Time Based Schedules
     void breath();
     void blink();
     void rapid();
 
    private:
     // Setting
-    __IO uint32_t *m_port;  // Ex: htim15.Instance->CCR2
-    uint16_t m_level{100};  // light level
-    uint16_t m_scale{1};    // light scale
+    __IO uint32_t *m_CCR;          // Ex: htim3.Instance->CCR2 for Timer3 Channel2
+    uint16_t m_level{100};         // light level
+    uint16_t m_scale{1};           // light scale
+    uint16_t m_ext_frequency{20};  // external interrupt frequency
+    uint16_t m_schedule{0};        // schedule timer
 
     // Time Based for 20Hz Scheduling
     bool m_breath_toggle{};
@@ -47,4 +45,4 @@ class LED {
                              99, 84, 70, 55, 45, 37, 29, 23, 19, 16, 10, 6};
 };
 
-#endif /* SRC_LED_H_ */
+#endif /* CORE_INC_LED */

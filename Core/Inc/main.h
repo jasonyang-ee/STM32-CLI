@@ -20,6 +20,9 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
+#define BUFFER_SIZE 512
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif

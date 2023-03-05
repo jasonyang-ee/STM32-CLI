@@ -44,11 +44,9 @@ set(sources_SRCS
     # Put here your source files, one in each line, relative to CMakeLists.txt file location
 	${PROJ_PATH}/Core/Src/LED.cpp
 	${PROJ_PATH}/Core/Src/main.cpp
+	${PROJ_PATH}/Core/Src/SerialCOM.cpp
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_msp.c
-	${PROJ_PATH}/Core/Src/stm32l4xx_hal_timebase_tim.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_it.c
-	${PROJ_PATH}/Core/Src/syscalls.c
-	${PROJ_PATH}/Core/Src/sysmem.c
 	${PROJ_PATH}/Core/Src/system_stm32l4xx.c
 	${PROJ_PATH}/Core/startup_stm32l432kcux.s
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c
@@ -62,6 +60,8 @@ set(sources_SRCS
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c
+	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pcd.c
+	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pcd_ex.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c
@@ -70,6 +70,7 @@ set(sources_SRCS
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c
+	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_usb.c
 )
 
 #

@@ -1,3 +1,4 @@
+${PROJ_PATH}/Core/Inc/lwshell/lwshell.c
 ${PROJ_PATH}/Core/Src/LED.cpp
 ${PROJ_PATH}/Core/Src/main.cpp
 ${PROJ_PATH}/Core/Src/SerialCOM.cpp

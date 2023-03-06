@@ -42,6 +42,7 @@ set(EXECUTABLE                      ${CMAKE_PROJECT_NAME})
 #
 set(sources_SRCS
     # Put here your source files, one in each line, relative to CMakeLists.txt file location
+	${PROJ_PATH}/Core/Inc/lwshell/lwshell.c
 	${PROJ_PATH}/Core/Src/LED.cpp
 	${PROJ_PATH}/Core/Src/main.cpp
 	${PROJ_PATH}/Core/Src/SerialCOM.cpp
@@ -76,6 +77,7 @@ set(sources_SRCS
 set(include_path_DIRS
     # Put here your include dirs, one in each line, relative to CMakeLists.txt file location
     ${PROJ_PATH}/Core/Inc
+    ${PROJ_PATH}/Core/Inc/lwshell
     ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Inc
     ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy
     ${PROJ_PATH}/Drivers/CMSIS/Device/ST/STM32L4xx/Include

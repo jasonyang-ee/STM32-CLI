@@ -19,6 +19,8 @@
 #include "main.h"
 
 #include "instances.h"
+#include "lwshell.h"
+
 
 TIM_HandleTypeDef htim2;
 DMA_HandleTypeDef hdma_usart2_rx;
@@ -31,6 +33,8 @@ static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_DMA_Init(void);
+
+int32_t testCMD(int32_t, char**);
 
 void PWM_PulseFinishedCallback(TIM_HandleTypeDef *);
 
@@ -56,6 +60,9 @@ int main(void) {
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
 
+	lwshell_init();
+	lwshell_register_cmd("testCMD", testCMD, "turn on");
+
     led_user.setCCR(&htim2.Instance->CCR2);
     led_user.on();
     while (1) {
@@ -63,6 +70,15 @@ int main(void) {
         // led_user.scheduler();
     }
 }
+
+/* --------------------------- Shell Functions ---------------------------------------------------*/
+
+int32_t testCMD(int32_t argc, char** argv){
+	led_user.toggle();
+	return 0;
+}
+
+
 
 /* --------------------------- Call Back Functions ---------------------------------------------------*/
 
@@ -74,8 +90,9 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) { serialCOM.setTxComplet
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
-        led_user.toggle();
+        // led_user.toggle();
         serialCOM.send("got it \n");
+		lwshell_input(&serialCOM.m_rx_data, Size);
 
         // Start the DMA again
         HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);

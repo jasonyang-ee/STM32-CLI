@@ -77,7 +77,6 @@ int main(void) {
 
 int32_t testCMD(int32_t argc, char** argv){
 	led_user.toggle();
-	serialCOM.send("LED Turned ON");
 	return 0;
 }
 
@@ -95,8 +94,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
         // led_user.toggle();
         
-		lwshell_input(&serialCOM.m_rx_data, Size);
-		serialCOM.send("got it \n");
+		if(lwshell_input(&serialCOM.m_rx_data, Size) == lwshellOK)
+		serialCOM.send("LED Turned ON\n");
 
         // Start the DMA again
         HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);

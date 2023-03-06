@@ -19,8 +19,6 @@
 #include "main.h"
 
 #include "instances.h"
-#include "lwshell.h"
-
 
 TIM_HandleTypeDef htim2;
 DMA_HandleTypeDef hdma_usart2_rx;
@@ -28,6 +26,7 @@ UART_HandleTypeDef huart2;
 
 LED led_user{100, 1, 1000};
 SerialCOM serialCOM{};
+CLI cli{};
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -35,10 +34,7 @@ static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_DMA_Init(void);
 
-int32_t testCMD(int32_t, char**);
-
 void PWM_PulseFinishedCallback(TIM_HandleTypeDef *);
-
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *);
 
 /**
@@ -55,32 +51,20 @@ int main(void) {
     MX_TIM2_Init();
     MX_USART2_UART_Init();
 
-    HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);
-
+    cli.init();
     serialCOM.setPort(&huart2);
+    led_user.setCCR(&htim2.Instance->CCR2);
+
+    HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
 
-	lwshell_init();
-	lwshell_register_cmd("testCMD", testCMD, "turn on");
-
-    led_user.setCCR(&htim2.Instance->CCR2);
     led_user.on();
     while (1) {
         // HAL_Delay(50);
         // led_user.scheduler();
     }
 }
-
-/* --------------------------- Shell Functions ---------------------------------------------------*/
-
-
-int32_t testCMD(int32_t argc, char** argv){
-	led_user.toggle();
-	return 0;
-}
-
-
 
 /* --------------------------- Call Back Functions ---------------------------------------------------*/
 
@@ -92,10 +76,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) { serialCOM.setTxComplet
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
-        // led_user.toggle();
-        
-		if(lwshell_input(&serialCOM.m_rx_data, Size) == lwshellOK)
-		serialCOM.send("LED Turned ON\n");
+        if (cli.parse(Size)) serialCOM.send("LED Turned ON\n");
 
         // Start the DMA again
         HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);

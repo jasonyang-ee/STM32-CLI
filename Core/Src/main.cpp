@@ -25,6 +25,7 @@
 TIM_HandleTypeDef htim2;
 DMA_HandleTypeDef hdma_usart2_rx;
 UART_HandleTypeDef huart2;
+
 LED led_user{100, 1, 1000};
 SerialCOM serialCOM{};
 
@@ -73,8 +74,10 @@ int main(void) {
 
 /* --------------------------- Shell Functions ---------------------------------------------------*/
 
+
 int32_t testCMD(int32_t argc, char** argv){
 	led_user.toggle();
+	serialCOM.send("LED Turned ON");
 	return 0;
 }
 
@@ -91,8 +94,9 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) { serialCOM.setTxComplet
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
         // led_user.toggle();
-        serialCOM.send("got it \n");
+        
 		lwshell_input(&serialCOM.m_rx_data, Size);
+		serialCOM.send("got it \n");
 
         // Start the DMA again
         HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);

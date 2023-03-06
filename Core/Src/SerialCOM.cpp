@@ -151,9 +151,9 @@ void SerialCOM::send(const char *data) {
     output_loc_ptr = (uint8_t *)strchr((char *)m_tx_data, '\0');
     output_size = output_loc_ptr - m_tx_data;
 
-    while (!tx_complete)
-        ;
-    tx_complete = false;
+    // while (!tx_complete)
+    //     ;
+    // tx_complete = false;
     HAL_UART_Transmit_IT(m_port, m_tx_data, output_size);
 }
 

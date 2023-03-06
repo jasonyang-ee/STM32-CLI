@@ -345,7 +345,7 @@ extern "C" {
 
 #define CLI_TOKEN_NPOS 0xffff
 
-#define UNUSED(x) (void)x
+#define UNUSED_CLI(x) (void)x
 
 #define PREPARE_IMPL(t) \
   EmbeddedCliImpl* impl = (EmbeddedCliImpl*)t->_impl
@@ -1169,7 +1169,7 @@ static void initInternalBindings(EmbeddedCli *cli) {
 }
 
 static void onHelp(EmbeddedCli *cli, char *tokens, void *context) {
-    UNUSED(context);
+    UNUSED_CLI(context);
     PREPARE_IMPL(cli);
 
     if (impl->bindingsCount == 0) {

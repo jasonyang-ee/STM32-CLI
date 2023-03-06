@@ -18,13 +18,13 @@
 
 #include "main.h"
 
-#define EMBEDDED_CLI_IMPL
-#include "embedded_cli.h"
 #include "instances.h"
 
 TIM_HandleTypeDef htim2;
 DMA_HandleTypeDef hdma_usart2_rx;
 UART_HandleTypeDef huart2;
+LED led_user{100, 1, 1000};
+SerialCOM serialCOM{};
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -33,16 +33,8 @@ static void MX_USART2_UART_Init(void);
 static void MX_DMA_Init(void);
 
 void PWM_PulseFinishedCallback(TIM_HandleTypeDef *);
+
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *);
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *);
-
-void writeChar(EmbeddedCli *, char);
-
-LED led_user{100, 1, 1000};
-SerialCOM serialCOM{};
-
-EmbeddedCliConfig *config = embeddedCliDefaultConfig();
-EmbeddedCli *cli = embeddedCliNewDefault();
 
 /**
  * @brief  The application entry point.
@@ -54,9 +46,9 @@ int main(void) {
     SystemClock_Config();
 
     MX_GPIO_Init();
+    MX_DMA_Init();  // position matters
     MX_TIM2_Init();
     MX_USART2_UART_Init();
-    MX_DMA_Init();
 
     HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);
 
@@ -64,19 +56,13 @@ int main(void) {
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
 
-    config->maxBindingCount = 16;
-
     led_user.setCCR(&htim2.Instance->CCR2);
-    led_user.breath();
+    led_user.on();
     while (1) {
         // HAL_Delay(50);
         // led_user.scheduler();
     }
 }
-
-/* --------------------------- Other Functions ---------------------------------------------------*/
-
-void writeChar(EmbeddedCli *embeddedCli, char c) { serialCOM.send(c); }
 
 /* --------------------------- Call Back Functions ---------------------------------------------------*/
 
@@ -88,11 +74,8 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) { serialCOM.setTxComplet
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
-        for (int i = 0; serialCOM.m_rx_data[i] != '\0'; i++) {
-            embeddedCliReceiveChar(cli, (char)serialCOM.m_rx_data[i]);
-        }
-
-        embeddedCliProcess(cli);
+        led_user.toggle();
+        serialCOM.send("got it \n");
 
         // Start the DMA again
         HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);

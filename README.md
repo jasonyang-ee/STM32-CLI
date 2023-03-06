@@ -6,26 +6,17 @@
 
 Project Using STM32L432KC as Example. Test hardware is NUCLEO-L432KC.
 
-## PWM
 
-- `Prescaler` x `Overflow` = `Clock Source` = `System Clock` / `Desired PWM Frequency`
 
-- If wanting period be 100 for ease of duty cycle setting:
-- 32Mhz / 1KHz / 100 = 320
-- => `prescaler`: 320, `period`: 100, `PWM Frequency`: 1KHz
-- If wanting max precision with using max period:
-- 32Mhz / 1KHz / (if > 65535) then divide 65535 (16bit period)
-- => `prescaler`: 1, `period`: 32000, `PWM Frequency`: 1KHz
-- Use `clock source`: `internal clock (APBx)`
-- Enable `global interrupt`
-- Run `HAL_TIM_PWM_Start_IT(&htimX, TIM_CHANNEL_X)` in `main()`
-- Define `void PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)`
-- Run `led_user.scheduler()` in the `PWM_PulseFinishedCallback`
+## DMA
 
-## LED Class
-  - Init object `LED led_user{period, dimmer, PWM Frequency}`
-  - Passthogh channel CCR with `led_user.setCCR(&htimX.Instance->CCRX);`
-  - Ready to use `on()`, `off()`, `toggle()`, `set()`, `breath()`, `blink()`, `rapid()`.
+- DMA Init Position matters, must put in front of UART Init but after GPIO Init.
+- DMA for Uart RX for "byte" "normal mode"
+- __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT); is required to avoid half transfer complete interrupt collision.
+
+
+
+
 
 ## C++ Host
 - Optionally, declear `extern object` in `instance.h` to allow object sharing.

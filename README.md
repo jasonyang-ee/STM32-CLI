@@ -78,6 +78,13 @@ Project Using STM32L432KC as Example. Test hardware is NUCLEO-L432KC.
 - Only define object init in `main.cpp`.
 
 
+
+
+
+## Free RTOS
+- Class `Thread` is used to hose RTOS task creation and defination.
+- All `instances` object must be configured and initialized before `osKernelStart()`.
+
 ### Side Note
 
 Use Regular Expression: `` /\*.*/ `` to remove HAL comments in `main` and `it`

@@ -8,15 +8,17 @@
 #include "usart.h"
 
 // Objects
+
 #include "instances.h"
 
 LED led_user{100, 1, 1000};
 SerialCOM serialCOM{};
 CLI cli{};
+Thread t1{};
+
 
 // System Start Function
 void SystemClock_Config(void);
-void MX_FREERTOS_Init(void);
 
 // Interrupts Functions
 void PWM_PulseFinishedCallback(TIM_HandleTypeDef *);
@@ -32,9 +34,6 @@ int main(void) {
     MX_DMA_Init();
     MX_USART2_UART_Init();
 
-    MX_FREERTOS_Init();
-    osKernelStart();
-
     HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
@@ -43,6 +42,8 @@ int main(void) {
     cli.init();
     serialCOM.setPort(&huart2);
     led_user.setCCR(&htim2.Instance->CCR2);
+
+    osKernelStart();
 
     while (1) {
     }

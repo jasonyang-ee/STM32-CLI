@@ -45,7 +45,6 @@ set(sources_SRCS
 	${PROJ_PATH}/Core/Inc/lwshell/lwshell.c
 	${PROJ_PATH}/Core/Src/CLI.cpp
 	${PROJ_PATH}/Core/Src/dma.c
-	${PROJ_PATH}/Core/Src/freertos.cpp
 	${PROJ_PATH}/Core/Src/gpio.c
 	${PROJ_PATH}/Core/Src/LED.cpp
 	${PROJ_PATH}/Core/Src/main.cpp
@@ -54,6 +53,7 @@ set(sources_SRCS
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_timebase_tim.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_it.c
 	${PROJ_PATH}/Core/Src/system_stm32l4xx.c
+	${PROJ_PATH}/Core/Src/Thread.cpp
 	${PROJ_PATH}/Core/Src/tim.c
 	${PROJ_PATH}/Core/Src/usart.c
 	${PROJ_PATH}/Core/startup_stm32l432kcux.s

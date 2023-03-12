@@ -3,20 +3,28 @@
 
 #include "main.h"
 
+/**
+ * @brief Construct a new LED::led object
+ * @param level Set britness % relative to PWM period value. 1000 is good
+ * @param scale Set global dimmer for level.
+ * @param freq Provide scheduler running frequency. 100Hz is good
+ * @warning setPort(&htimX->CCRX) is required to run.
+ *
+ */
 class LED {
    public:
-    LED(uint16_t, uint16_t, uint16_t);
+    LED(int32_t, int32_t, int32_t);
     virtual ~LED();
 
-    void setCCR(__IO uint32_t *);
-    void setScale(uint16_t);
-    void setLevel(uint16_t);
+    void setPort(__IO uint32_t *);
+    void setScale(int32_t);
+    void setLevel(int32_t);
+    void addLevel(int32_t);
 
     void on();
     void off();
-    void half();
     void toggle();
-    void set(bool);
+    void setState(bool);
 
     void scheduler();
 
@@ -25,24 +33,29 @@ class LED {
     void rapid();
 
    private:
+    void applyCCR();
+    void zeroCCR();
+    bool getActiveModeState();
+    void activeModeOff();
+
     // Setting
-    __IO uint32_t *m_CCR;          // Ex: htim3.Instance->CCR2 for Timer3 Channel2
-    uint16_t m_level{100};         // light level
-    uint16_t m_scale{1};           // light scale
-    uint16_t m_ext_frequency{20};  // external interrupt frequency
-    uint16_t m_schedule{0};        // schedule timer
+    __IO uint32_t *m_CCR;         // Ex: htim3.Instance->CCR2 for Timer3 Channel2
+    int32_t m_level{0};           // light level
+    int32_t m_scale{1};           // light scale
+    int32_t m_ext_frequency{20};  // external interrupt frequency
+    int32_t m_schedule{0};        // schedule timer
 
     // Time Based for 20Hz Scheduling
-    bool m_breath_toggle{};
-    bool m_blink_toggle{};
-    bool m_rapid_toggle{};
+    bool m_breath_toggle{0};
+    bool m_blink_toggle{0};
+    bool m_rapid_toggle{0};
 
-    uint16_t m_blink_timer{};
-    uint16_t m_rapid_timer{};
+    uint16_t m_blink_timer{0};
+    uint16_t m_rapid_timer{0};
 
-    uint8_t m_breath_itr{};
-    uint16_t m_breath[25] = {0,  5,  10, 17, 29, 43, 60, 69, 77, 83, 91, 97, 99,
-                             99, 84, 70, 55, 45, 37, 29, 23, 19, 16, 10, 6};
+    uint8_t m_breath_itr{0};
+    uint16_t m_breath[25] = {0,   50,  100, 170, 290, 430, 600, 690, 770, 830, 910, 970, 990,
+                             990, 840, 700, 550, 450, 370, 290, 230, 190, 160, 100, 60};
 };
 
 #endif /* CORE_INC_LED */

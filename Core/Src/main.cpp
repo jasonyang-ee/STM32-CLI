@@ -41,7 +41,7 @@ int main(void) {
 
     cli.init();
     serialCOM.setPort(&huart2);
-    led_user.setCCR(&htim2.Instance->CCR2);
+    led_user.setPort(&htim2.Instance->CCR2);
 
     osKernelStart();
 

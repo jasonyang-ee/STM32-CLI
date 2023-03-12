@@ -15,7 +15,7 @@
             "interface": "swd",                 //Interface setup
             "serialNumber": "",                 //Set ST-Link ID if you use multiple at the same time
             "runToEntryPoint": "main",          //Run to main and stop there
-            "svdFile": "${workspaceFolder}/STM32L4_svd/STM32L4_svd_V1.3/STM32L4x2.svd",         //SVD file to see reisters
+            "svdFile": "${workspaceFolder}/STM32L4_svd/STM32L4x2.svd",         //SVD file to see reisters
             "v1": false,
             "showDevDebugOutput": "both",
         }

@@ -1,165 +1,60 @@
 #include "SerialCOM.hpp"
 
-#include "stdio.h"
-#include "string.h"
-
 SerialCOM::SerialCOM() {}
 
 SerialCOM::~SerialCOM() {}
 
+/**
+ * @brief Initialize with uart handler reference and start device.
+ *
+ * @param port
+ */
 void SerialCOM::setPort(UART_HandleTypeDef *port) { m_port = port; }
 
-bool SerialCOM::isTxComplete() { return tx_complete; }
+/**
+ * @brief Append new line to buffer
+ *
+ */
+void SerialCOM::sendLn() { m_buffer_msg.append("\n"); };
 
-void SerialCOM::setTxComplete() { tx_complete = true; }
+/**
+ * @brief Append string to buffer.
+ *
+ * @param msg C++ string to send.
+ */
+void SerialCOM::sendString(std::string msg) { m_buffer_msg.append(msg); }
 
-void SerialCOM::send() {
-    int size{};
-    uint8_t *location_ptr;
+/**
+ * @brief Append single number to buffer.
+ *
+ * @param value all kinds of numbers.
+ */
+void SerialCOM::sendNumber(int value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(float value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(double value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(uint8_t value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(uint16_t value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(uint32_t value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(int8_t value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(int16_t value) { m_buffer_msg.append(std::to_string(value)); }
+void SerialCOM::sendNumber(int32_t value) { m_buffer_msg.append(std::to_string(value)); }
 
-    location_ptr = (uint8_t *)strchr((char *)m_tx_data, '\0');
-    size = location_ptr - m_tx_data;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, m_tx_data, size);
-}
-
-void SerialCOM::send(uint8_t value) {
-    int size{};
-    uint8_t msg[BUFFER_SIZE]{};
-    uint8_t *location_ptr;
-
-    sprintf((char *)msg, "%d", (int)value);
-    location_ptr = (uint8_t *)strchr((char *)msg, '\0');
-    size = location_ptr - msg;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, msg, size);
-}
-
-void SerialCOM::send(uint16_t value) {
-    int size{};
-    uint8_t msg[BUFFER_SIZE]{};
-    uint8_t *location_ptr;
-
-    sprintf((char *)msg, "%d", (int)value);
-    location_ptr = (uint8_t *)strchr((char *)msg, '\0');
-    size = location_ptr - msg;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, msg, size);
-}
-
-void SerialCOM::send(uint32_t value) {
-    int size{};
-    uint8_t msg[BUFFER_SIZE]{};
-    uint8_t *location_ptr;
-
-    sprintf((char *)msg, "%d", (int)value);
-    location_ptr = (uint8_t *)strchr((char *)msg, '\0');
-    size = location_ptr - msg;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, msg, size);
-}
-
-void SerialCOM::send(int value) {
-    int size{};
-    uint8_t msg[BUFFER_SIZE]{};
-    uint8_t *location_ptr;
-
-    sprintf((char *)msg, "%d", value);
-    location_ptr = (uint8_t *)strchr((char *)msg, '\0');
-    size = location_ptr - msg;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, msg, size);
-}
-void SerialCOM::send(float value) {
-    int size{};
-    uint8_t msg[BUFFER_SIZE]{};
-    uint8_t *location_ptr;
-
-    sprintf((char *)msg, "%f", value);
-    location_ptr = (uint8_t *)strchr((char *)msg, '\0');
-    size = location_ptr - msg;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, msg, size);
-}
-
-void SerialCOM::send(double value) {
-    int size{};
-    uint8_t msg[BUFFER_SIZE]{};
-    uint8_t *location_ptr;
-
-    sprintf((char *)msg, "%f", value);
-    location_ptr = (uint8_t *)strchr((char *)msg, '\0');
-    size = location_ptr - msg;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, msg, size);
-}
-
-void SerialCOM::send(uint8_t *data) {
-    size_t output_size{};
-    size_t src_size{};
-    uint8_t *src_loc_ptr;
-    uint8_t *output_loc_ptr;
-
-    src_loc_ptr = (uint8_t *)strchr((char *)data, '\0');
-    src_size = src_loc_ptr - data;
-
-    memset(m_tx_data, 0, sizeof m_tx_data);
-    memcpy(m_tx_data, data, src_size);
-
-    output_loc_ptr = (uint8_t *)strchr((char *)m_tx_data, '\0');
-    output_size = output_loc_ptr - m_tx_data;
-
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, m_tx_data, output_size);
-}
-
-void SerialCOM::send(const char *data) {
-    size_t output_size{};
-    size_t src_size{};
-    char *src_loc_ptr;
-    uint8_t *output_loc_ptr;
-
-    src_loc_ptr = strchr((char *)data, '\0');
-    src_size = src_loc_ptr - data;
-
-    memset(m_tx_data, 0, sizeof m_tx_data);
-    memcpy(m_tx_data, data, src_size);
-
-    output_loc_ptr = (uint8_t *)strchr((char *)m_tx_data, '\0');
-    output_size = output_loc_ptr - m_tx_data;
-
-    // while (!tx_complete)
-    //     ;
-    // tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, m_tx_data, output_size);
-}
-
-void SerialCOM::send_ln() {
-    while (!tx_complete)
-        ;
-    tx_complete = false;
-    HAL_UART_Transmit_IT(m_port, (uint8_t *)"\n", 1);
+/**
+ * @brief Periodically send uart in DMA mode if buffer !empty.
+ *
+ * @note Place this in a timer interrupt.
+ */
+void SerialCOM::scheduler() {
+    if (!m_buffer_msg.empty()) {
+        if (m_buffer_msg.size() < (BUFFER_SIZE)) {
+            std::copy(m_buffer_msg.begin(), m_buffer_msg.end(), m_tx_data);
+            m_tx_data_size = m_buffer_msg.size();
+            m_buffer_msg.clear();
+        } else {
+            std::copy(m_buffer_msg.begin(), m_buffer_msg.begin() + BUFFER_SIZE, m_tx_data);
+            m_tx_data_size = BUFFER_SIZE;
+            m_buffer_msg.erase(0, BUFFER_SIZE);
+        }
+        HAL_UART_Transmit_DMA(m_port, m_tx_data, m_tx_data_size);
+    }
 }

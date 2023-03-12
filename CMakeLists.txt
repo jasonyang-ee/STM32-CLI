@@ -34,7 +34,7 @@ set(CPU_PARAMETERS
 )
 
 # Set linker script
-set(linker_script_SRC               ${PROJ_PATH}/Core/STM32L432KCUX_FLASH.ld)
+set(linker_script_SRC               ${PROJ_PATH}/Core/STM32L432KCUx_FLASH.ld)
 set(EXECUTABLE                      ${CMAKE_PROJECT_NAME})
 
 #
@@ -44,12 +44,18 @@ set(sources_SRCS
     # Put here your source files, one in each line, relative to CMakeLists.txt file location
 	${PROJ_PATH}/Core/Inc/lwshell/lwshell.c
 	${PROJ_PATH}/Core/Src/CLI.cpp
+	${PROJ_PATH}/Core/Src/dma.c
+	${PROJ_PATH}/Core/Src/freertos.cpp
+	${PROJ_PATH}/Core/Src/gpio.c
 	${PROJ_PATH}/Core/Src/LED.cpp
 	${PROJ_PATH}/Core/Src/main.cpp
 	${PROJ_PATH}/Core/Src/SerialCOM.cpp
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_msp.c
+	${PROJ_PATH}/Core/Src/stm32l4xx_hal_timebase_tim.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_it.c
 	${PROJ_PATH}/Core/Src/system_stm32l4xx.c
+	${PROJ_PATH}/Core/Src/tim.c
+	${PROJ_PATH}/Core/Src/usart.c
 	${PROJ_PATH}/Core/startup_stm32l432kcux.s
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c
@@ -70,6 +76,16 @@ set(sources_SRCS
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c
 	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/list.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/queue.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/timers.c
 )
 
 #
@@ -77,12 +93,15 @@ set(sources_SRCS
 #
 set(include_path_DIRS
     # Put here your include dirs, one in each line, relative to CMakeLists.txt file location
-    ${PROJ_PATH}/Core/Inc
-    ${PROJ_PATH}/Core/Inc/lwshell
-    ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Inc
-    ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy
-    ${PROJ_PATH}/Drivers/CMSIS/Device/ST/STM32L4xx/Include
-    ${PROJ_PATH}/Drivers/CMSIS/Include
+	${PROJ_PATH}/Core/Inc
+	${PROJ_PATH}/Core/Inc/lwshell
+	${PROJ_PATH}/Drivers/CMSIS/Device/ST/STM32L4xx/Include
+	${PROJ_PATH}/Drivers/CMSIS/Include
+	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Inc
+	${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/include
+	${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
 )
 
 #

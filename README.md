@@ -76,14 +76,25 @@ Project Using STM32L432KC as Example. Test hardware is NUCLEO-L432KC.
 ## C++ Host
 - Optionally, declear `extern object` in `instance.h` to allow object sharing.
 - Only define object init in `main.cpp`.
+- Hal Timebase using TIM16. RTOS using systick
 
 
 
 
 
 ## Free RTOS
+
+API: https://www.freertos.org/a00106.html
+
 - Class `Thread` is used to hose RTOS task creation and defination.
 - All `instances` object must be configured and initialized before `osKernelStart()`.
+- `#define configSUPPORT_STATIC_ALLOCATION` set to false.
+
+
+
+
+
+
 
 ### Side Note
 

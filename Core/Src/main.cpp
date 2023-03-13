@@ -132,8 +132,6 @@ void SystemClock_Config(void) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM16) {
         HAL_IncTick();
-		led_user.scheduler();
-        serialCOM.scheduler();
     }
 }
 

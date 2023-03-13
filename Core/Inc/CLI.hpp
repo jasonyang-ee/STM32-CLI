@@ -13,6 +13,7 @@ class CLI {
 	// User Commands
 
 	static int32_t led(int32_t, char**);
+	static int32_t speak(int32_t, char**);
 
 
 };

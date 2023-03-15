@@ -4,17 +4,9 @@
 #include "cmsis_os.h"
 #include "dma.h"
 #include "gpio.h"
+#include "instances.h"
 #include "tim.h"
 #include "usart.h"
-
-// Objects
-
-#include "instances.h"
-
-LED led_user{100, 1, 1000};
-SerialCOM serialCOM{};
-CLI cli{};
-Thread t1{};
 
 
 // System Start Function
@@ -23,6 +15,12 @@ void SystemClock_Config(void);
 // Interrupts Functions
 void PWM_PulseFinishedCallback(TIM_HandleTypeDef *);
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *);
+
+// Instances Objects
+CLI cli{};
+Thread thread{};
+LED led_user{1000, 1};
+SerialCOM serialCOM{};
 
 int main(void) {
     HAL_Init();
@@ -35,14 +33,15 @@ int main(void) {
     MX_USART2_UART_Init();
 
     HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, UART_BUFFER);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
 
-
+    // Instances Initialization
     cli.init();
     serialCOM.setPort(&huart2);
     led_user.setPort(&htim2.Instance->CCR2);
 
+    // FreeRTOS Start
     osKernelStart();
 
     while (1) {
@@ -51,18 +50,12 @@ int main(void) {
 
 /* ------------------------- Call Back Functions ---------------------------------*/
 
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance == TIM2) led_user.scheduler();
-}
-
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) { serialCOM.scheduler(); }
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
-        cli.parse(Size);
-
         // Start the DMA again
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, BUFFER_SIZE);
+        HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, UART_BUFFER);
         __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
     }
 }

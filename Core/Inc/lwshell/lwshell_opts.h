@@ -32,10 +32,9 @@
  * Version:         v1.2.0
  */
 
-#ifndef INC_LWSHELL_LWSHELL_OPTS_TEMPLATE
-#define INC_LWSHELL_LWSHELL_OPTS_TEMPLATE
-#ifndef LWSHELL_OPTS_HDR_H
-#define LWSHELL_OPTS_HDR_H
+#ifndef INC_LWSHELL_LWSHELL_OPTS
+#define INC_LWSHELL_LWSHELL_OPTS
+
 
 /* Rename this file to "lwshell_opts.h" for your application */
 
@@ -44,7 +43,6 @@
  * copy & replace here settings you want to change values
  */
 
-#endif /* LWSHELL_OPTS_HDR_H */
+#define LWSHELL_CFG_MAX_CMDS 20
 
-
-#endif    /* INC_LWSHELL_LWSHELL_OPTS_TEMPLATE */
+#endif    /* INC_LWSHELL_LWSHELL_OPTS */

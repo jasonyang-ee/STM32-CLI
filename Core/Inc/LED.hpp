@@ -7,13 +7,12 @@
  * @brief Construct a new LED::led object
  * @param level Set britness % relative to PWM period value. 1000 is good
  * @param scale Set global dimmer for level.
- * @param freq Provide scheduler running frequency. 100Hz is good
  * @warning setPort(&htimX->CCRX) is required to run.
  *
  */
 class LED {
    public:
-    LED(int32_t, int32_t, int32_t);
+    LED(int32_t, int32_t);
     virtual ~LED();
 
     void setPort(__IO uint32_t *);
@@ -42,8 +41,6 @@ class LED {
     __IO uint32_t *m_CCR;         // Ex: htim3.Instance->CCR2 for Timer3 Channel2
     int32_t m_level{0};           // light level
     int32_t m_scale{1};           // light scale
-    int32_t m_ext_frequency{20};  // external interrupt frequency
-    int32_t m_schedule{0};        // schedule timer
 
     // Time Based for 20Hz Scheduling
     bool m_breath_toggle{0};

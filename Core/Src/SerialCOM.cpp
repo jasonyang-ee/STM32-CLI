@@ -46,14 +46,14 @@ void SerialCOM::sendNumber(int32_t value) { m_buffer_msg.append(std::to_string(v
  */
 void SerialCOM::scheduler() {
     if (!m_buffer_msg.empty()) {
-        if (m_buffer_msg.size() < (BUFFER_SIZE)) {
+        if (m_buffer_msg.size() < (UART_BUFFER)) {
             std::copy(m_buffer_msg.begin(), m_buffer_msg.end(), m_tx_data);
             m_tx_data_size = m_buffer_msg.size();
             m_buffer_msg.clear();
         } else {
-            std::copy(m_buffer_msg.begin(), m_buffer_msg.begin() + BUFFER_SIZE, m_tx_data);
-            m_tx_data_size = BUFFER_SIZE;
-            m_buffer_msg.erase(0, BUFFER_SIZE);
+            std::copy(m_buffer_msg.begin(), m_buffer_msg.begin() + UART_BUFFER, m_tx_data);
+            m_tx_data_size = UART_BUFFER;
+            m_buffer_msg.erase(0, UART_BUFFER);
         }
         HAL_UART_Transmit_DMA(m_port, m_tx_data, m_tx_data_size);
     }

@@ -1,6 +1,8 @@
 {
 	"files.associations": {
+		"*.cpp": "cpp",
 		"stm32l4xx_hal.h": "c",
-		"lwshell.h": "c"
+		"lwshell.h": "c",
+		"lwshell_opts.h": "c"
 	}
 }

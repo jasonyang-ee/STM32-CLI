@@ -10,13 +10,17 @@ class Thread {
     Thread();
     virtual ~Thread();
 
+    TaskHandle_t parse_Handle;
     TaskHandle_t app_1_Handle;
-    TaskHandle_t schedule_Handle;
+    TaskHandle_t app_2_Handle;
+    TaskHandle_t schedule_20Hz_Handle;
+    TaskHandle_t schedule_10Hz_Handle;
 
-    static void app_1(void const*);
-    static void schedule(void const*);
-
-
+    void parse();
+    void app_1();
+    void app_2();
+    void schedule_20Hz();
+    void schedule_10Hz();
 };
 
 #endif /* CORE_INC_THREAD */

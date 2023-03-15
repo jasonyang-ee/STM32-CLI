@@ -10,7 +10,7 @@
 extern LED led_user;
 extern SerialCOM serialCOM;
 extern CLI cli;
-extern Thread t1;
+extern Thread thread;
 
 
 #endif    /* CORE_INC_INSTANCES */

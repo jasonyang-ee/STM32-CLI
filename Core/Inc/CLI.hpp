@@ -2,20 +2,21 @@
 #define CORE_INC_CLI
 
 #include "lwshell.h"
+#include "string.h"
 
 class CLI {
    public:
     CLI();
-	virtual ~CLI();
-	void init();
-	bool parse(uint16_t);
+    virtual ~CLI();
+    void init();
+    bool parse(uint16_t);
+    static void output(const char*, lwshell*);
 
-	// User Commands
+	uint16_t cmd_size;
 
-	static int32_t led(int32_t, char**);
-	static int32_t speak(int32_t, char**);
-
-
+    // User Commands
+    static int32_t led(int32_t, char**);
+    static int32_t help(int32_t, char**);
 };
 
 #endif /* CORE_INC_CLI */

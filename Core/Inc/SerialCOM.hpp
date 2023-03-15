@@ -6,8 +6,8 @@
 #include "stdio.h"
 #include "string"
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 64
+#ifndef UART_BUFFER
+#define UART_BUFFER 64
 #endif
 
 /**
@@ -15,7 +15,7 @@
  *
  * @warning setPort(&huartX) is required to run.
  *
- * @note define BUFFER_SIZE to overwrite the default 64 byte
+ * @note define UART_BUFFER to overwrite the default 64 byte
  */
 class SerialCOM {
    public:
@@ -38,8 +38,8 @@ class SerialCOM {
     void scheduler();
 
     // Tx Rx Memory for DMA to fetch and push
-    uint8_t m_tx_data[BUFFER_SIZE];  // BUFFER_SIZE may be re-defined in main.h
-    uint8_t m_rx_data[BUFFER_SIZE];
+    uint8_t m_tx_data[UART_BUFFER];  // UART_BUFFER may be re-defined in main.h
+    uint8_t m_rx_data[UART_BUFFER];
 
    private:
     // Port

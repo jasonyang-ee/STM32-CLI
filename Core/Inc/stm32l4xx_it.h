@@ -18,6 +18,9 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
+
+#ifndef CORE_INC_STM32L4XX_IT
+#define CORE_INC_STM32L4XX_IT
 #ifndef __STM32L4xx_IT_H
 #define __STM32L4xx_IT_H
 
@@ -55,7 +58,6 @@ void DebugMon_Handler(void);
 void DMA1_Channel6_IRQHandler(void);
 void DMA1_Channel7_IRQHandler(void);
 void TIM1_UP_TIM16_IRQHandler(void);
-void TIM2_IRQHandler(void);
 void USART2_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
@@ -66,3 +68,6 @@ void USART2_IRQHandler(void);
 #endif
 
 #endif /* __STM32L4xx_IT_H */
+
+
+#endif    /* CORE_INC_STM32L4XX_IT */

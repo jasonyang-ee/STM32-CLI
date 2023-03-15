@@ -1,9 +1,8 @@
 #include "LED.hpp"
 
-LED::LED(int32_t level, int32_t scale, int32_t freq) {
+LED::LED(int32_t level, int32_t scale) {
     m_level = level;
     m_scale = scale;
-    m_ext_frequency = freq;
 }
 
 LED::~LED() { zeroCCR(); }
@@ -109,36 +108,33 @@ void LED::addLevel(int32_t value) {
  * @note Timer interrupt frequency is set during object initializaiton.
  */
 void LED::scheduler() {
-    if (m_schedule == 0) {
-        // Breathing LED Logic
-        if (m_breath_toggle) {
-            if (++m_breath_itr < 25)
-                m_level = m_breath[m_breath_itr];
-            else
-                m_breath_itr = 0;
+    // Breathing LED Logic
+    if (m_breath_toggle) {
+        if (++m_breath_itr < 25)
+            m_level = m_breath[m_breath_itr];
+        else
+            m_breath_itr = 0;
 
-            *m_CCR = m_level / m_scale;
-        }
-
-        // Slow Blinking LED Logic
-        if (m_blink_toggle) {
-            if (m_blink_timer > 5) {
-                toggle();
-                m_blink_timer = 0;
-            } else
-                m_blink_timer++;
-        }
-
-        // Fast Blinking LED Logic
-        if (m_rapid_toggle) {
-            if (m_rapid_timer > 1) {
-                toggle();
-                m_rapid_timer = 0;
-            } else
-                m_rapid_timer++;
-        }
+        *m_CCR = m_level / m_scale;
     }
-    if (m_schedule++ > (m_ext_frequency / 20)) m_schedule = 0;  // making 20Hz schedule
+
+    // Slow Blinking LED Logic
+    else if (m_blink_toggle) {
+        if (m_blink_timer > 5) {
+            toggle();
+            m_blink_timer = 0;
+        } else
+            m_blink_timer++;
+    }
+
+    // Fast Blinking LED Logic
+    else if (m_rapid_toggle) {
+        if (m_rapid_timer > 1) {
+            toggle();
+            m_rapid_timer = 0;
+        } else
+            m_rapid_timer++;
+    }
 }
 
 /**
@@ -180,7 +176,9 @@ void LED::applyCCR() { *m_CCR = (uint32_t)(m_level / m_scale); }
 
 void LED::zeroCCR() { *m_CCR = 0; }
 
-bool LED::getActiveModeState() { return (m_breath_toggle || m_blink_toggle || m_rapid_toggle); }
+bool LED::getActiveModeState() {
+    return (m_breath_toggle || m_blink_toggle || m_rapid_toggle);
+}
 
 void LED::activeModeOff() {
     m_breath_toggle = false;

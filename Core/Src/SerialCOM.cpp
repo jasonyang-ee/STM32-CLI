@@ -56,7 +56,7 @@ bool SerialCOM::sendOut() {
             m_tx_data_size = UART_BUFFER;
             m_buffer_msg.erase(0, UART_BUFFER);
         }
-        if (HAL_UART_Transmit_DMA(m_port, m_tx_data, m_tx_data_size) == HAL_OK)
+        if (HAL_UART_Transmit_IT(m_port, m_tx_data, m_tx_data_size) == HAL_OK)
             return true;
     }
     return false;

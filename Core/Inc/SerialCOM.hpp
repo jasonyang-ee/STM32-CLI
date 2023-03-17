@@ -35,6 +35,7 @@ class SerialCOM {
     void sendNumber(int16_t);
     void sendNumber(int32_t);
 
+	
     bool sendOut();
 
     // Tx Rx Memory for DMA to fetch and push

@@ -2,7 +2,6 @@
 
 // Driver
 #include "cmsis_os.h"
-#include "dma.h"
 #include "gpio.h"
 #include "instances.h"
 #include "tim.h"
@@ -28,12 +27,10 @@ int main(void) {
 
     MX_GPIO_Init();
     MX_TIM2_Init();
-    MX_DMA_Init();
     MX_USART2_UART_Init();
 
     HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, UART_BUFFER);
-    __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
+    HAL_UARTEx_ReceiveToIdle_IT(&huart2, serialCOM.m_rx_data, UART_BUFFER);
 
     // Instances Initialization
     cli.init();
@@ -55,13 +52,12 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
-		// Parse Command
-		cli.cmd_size = Size;
-		xTaskResumeFromISR(thread.parse_Handle);
+        // Parse Command
+        cli.cmd_size = Size;
+        xTaskResumeFromISR(thread.parse_Handle);
 
         // Start the DMA again
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart2, serialCOM.m_rx_data, UART_BUFFER);
-        __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
+        HAL_UARTEx_ReceiveToIdle_IT(&huart2, serialCOM.m_rx_data, UART_BUFFER);
     }
 }
 

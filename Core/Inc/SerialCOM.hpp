@@ -35,7 +35,7 @@ class SerialCOM {
     void sendNumber(int16_t);
     void sendNumber(int32_t);
 
-    void scheduler();
+    bool sendOut();
 
     // Tx Rx Memory for DMA to fetch and push
     uint8_t m_tx_data[UART_BUFFER];  // UART_BUFFER may be re-defined in main.h

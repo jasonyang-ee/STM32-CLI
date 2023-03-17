@@ -6,6 +6,7 @@
 #include "CLI.hpp"
 #include "Thread.hpp"
 
+#define UART_BUFFER 64
 
 extern LED led_user;
 extern SerialCOM serialCOM;

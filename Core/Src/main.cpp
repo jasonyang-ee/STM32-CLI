@@ -8,7 +8,6 @@
 #include "tim.h"
 #include "usart.h"
 
-
 // System Start Function
 void SystemClock_Config(void);
 
@@ -42,7 +41,7 @@ int main(void) {
     led_user.setPort(&htim2.Instance->CCR2);
 
     // FreeRTOS Start
-    osKernelStart();
+    vTaskStartScheduler();
 
     while (1) {
     }
@@ -50,7 +49,9 @@ int main(void) {
 
 /* ------------------------- Call Back Functions ---------------------------------*/
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) { serialCOM.scheduler(); }
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+    xTaskResumeFromISR(thread.serial_send_Handle);
+}
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {

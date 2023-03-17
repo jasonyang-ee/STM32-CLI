@@ -9,15 +9,15 @@ class CLI {
     CLI();
     virtual ~CLI();
     void init();
-    bool parse();
+	bool parse();
+    void setSize(uint16_t);
     static void output(const char*, lwshell*);
 
-	// Recelived Command Size
-	uint16_t cmd_size;
-
-    // User Commands
     static int32_t led(int32_t, char**);
     static int32_t help(int32_t, char**);
+
+	private:
+	uint16_t m_cmd_size;
 };
 
 #endif /* CORE_INC_CLI */

@@ -15,9 +15,11 @@ void CLI::init() {
 }
 
 bool CLI::parse() {
-    if (lwshell_input(serialCOM.m_rx_data, cmd_size) == lwshellOK) return true;
+    if (lwshell_input(serialCOM.m_rx_data, m_cmd_size) == lwshellOK) return true;
     return false;
 }
+
+void CLI::setSize(uint16_t size) {m_cmd_size = size;}
 
 void CLI::output(const char* str, lwshell* lwobj) { serialCOM.sendString(str); }
 

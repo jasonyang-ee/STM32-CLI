@@ -53,7 +53,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART2) {
         // Parse Command
-        cli.cmd_size = Size;
+        cli.setSize(Size);
         xTaskResumeFromISR(thread.parse_Handle);
 
         // Start the DMA again

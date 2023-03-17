@@ -32,7 +32,6 @@ void LED::off() { setState(0); }
  *
  */
 void LED::toggle() {
-    activeModeOff();
     if (*m_CCR > 0)
         zeroCCR();
     else

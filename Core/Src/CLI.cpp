@@ -2,8 +2,6 @@
 
 #include "instances.h"
 
-
-
 CLI::CLI() {}
 
 CLI::~CLI() {}
@@ -16,8 +14,8 @@ void CLI::init() {
     lwshell_register_cmd("led", &CLI::led, NULL);
 }
 
-bool CLI::parse(uint16_t size) {
-    if (lwshell_input(serialCOM.m_rx_data, size) == lwshellOK) return true;
+bool CLI::parse() {
+    if (lwshell_input(serialCOM.m_rx_data, cmd_size) == lwshellOK) return true;
     return false;
 }
 
@@ -30,7 +28,7 @@ int32_t CLI::led(int32_t argc, char** argv) {
         "  off\tTurns OFF LED\n"
         "  breath\tLED in breath effect mode\n"
         "  blink\tLED in slow blink mode\n"
-        "  rapid\tLED in fast blink mode\n";
+        "  rapid\tLED in fast blink mode\n\n";
 
     if (!strcmp(argv[1], "help")) serialCOM.sendString(led_help);
     if (!strcmp(argv[1], "on")) led_user.on();

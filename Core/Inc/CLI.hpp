@@ -9,9 +9,10 @@ class CLI {
     CLI();
     virtual ~CLI();
     void init();
-    bool parse(uint16_t);
+    bool parse();
     static void output(const char*, lwshell*);
 
+	// Recelived Command Size
 	uint16_t cmd_size;
 
     // User Commands

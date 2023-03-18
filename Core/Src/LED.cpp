@@ -5,6 +5,12 @@ LED::LED(int32_t level, int32_t scale) {
     m_scale = scale;
 }
 
+LED::LED(int32_t level, int32_t scale, uint16_t freq) {
+    m_level = level;
+    m_scale = scale;
+    m_ext_freq = freq;
+}
+
 LED::~LED() { zeroCCR(); }
 
 /**
@@ -107,32 +113,37 @@ void LED::addLevel(int32_t value) {
  * @note Timer interrupt frequency is set during object initializaiton.
  */
 void LED::scheduler() {
-    // Breathing LED Logic
-    if (m_breath_toggle) {
-        if (++m_breath_itr < 25)
-            m_level = m_breath[m_breath_itr];
-        else
-            m_breath_itr = 0;
+	// Supporting both thread or timer interrupt active mode schedule for consistant 20Hz
+    if (m_ext_freq != 0) ++m_schedule %= (m_ext_freq/20);
 
-        *m_CCR = m_level / m_scale;
-    }
+	// Active mode schedule logic
+    if (m_schedule == 0) {
+        if (m_breath_toggle) {
+            if (++m_breath_itr < 25)
+                m_level = m_breath[m_breath_itr];
+            else
+                m_breath_itr = 0;
 
-    // Slow Blinking LED Logic
-    else if (m_blink_toggle) {
-        if (m_blink_timer > 5) {
-            toggle();
-            m_blink_timer = 0;
-        } else
-            m_blink_timer++;
-    }
+            *m_CCR = m_level / m_scale;
+        }
 
-    // Fast Blinking LED Logic
-    else if (m_rapid_toggle) {
-        if (m_rapid_timer > 1) {
-            toggle();
-            m_rapid_timer = 0;
-        } else
-            m_rapid_timer++;
+        // Slow Blinking LED Logic
+        else if (m_blink_toggle) {
+            if (m_blink_timer > 5) {
+                toggle();
+                m_blink_timer = 0;
+            } else
+                m_blink_timer++;
+        }
+
+        // Fast Blinking LED Logic
+        else if (m_rapid_toggle) {
+            if (m_rapid_timer > 1) {
+                toggle();
+                m_rapid_timer = 0;
+            } else
+                m_rapid_timer++;
+        }
     }
 }
 

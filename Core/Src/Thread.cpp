@@ -23,8 +23,6 @@ Thread::Thread() {
 
     auto t5 = [](void *arg) { static_cast<Thread *>(arg)->serial_send(); };
     xTaskCreate(t5, "serial send out", 128, this, 0, &serial_send_Handle);
-
-    serialCOM_sem = xSemaphoreCreateBinary();
 }
 
 Thread::~Thread() {}

@@ -1,8 +1,8 @@
 #ifndef CORE_INC_THREAD
 #define CORE_INC_THREAD
 
-#include "cmsis_os.h"
 #include "main.h"
+#include "FreeRTOS.h"
 #include "task.h"
 
 class Thread {
@@ -24,8 +24,6 @@ class Thread {
 
     TaskHandle_t serial_send_Handle;
     void serial_send();
-
-	SemaphoreHandle_t serialCOM_sem;
 };
 
 #endif    /* CORE_INC_THREAD */

@@ -51,6 +51,7 @@ set(sources_SRCS
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_msp.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_hal_timebase_tim.c
 	${PROJ_PATH}/Core/Src/stm32l4xx_it.c
+	${PROJ_PATH}/Core/Src/syscalls.c
 	${PROJ_PATH}/Core/Src/system_stm32l4xx.c
 	${PROJ_PATH}/Core/Src/Thread.cpp
 	${PROJ_PATH}/Core/Src/tim.c
@@ -140,7 +141,7 @@ target_link_options(${EXECUTABLE} PRIVATE
     ${CPU_PARAMETERS}
     -Wl,-Map=${CMAKE_PROJECT_NAME}.map
     --specs=nosys.specs
-    -u _printf_float                # STDIO float formatting support
+    #-u _printf_float                # STDIO float formatting support
     -Wl,--start-group
     -lc
     -lm

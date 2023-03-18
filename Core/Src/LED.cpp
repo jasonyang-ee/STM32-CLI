@@ -182,7 +182,7 @@ void LED::rapid() {
 
 // Private Functions
 
-void LED::applyCCR() { *m_CCR = (uint32_t)(m_level / m_scale); }
+void LED::applyCCR() { *m_CCR = m_level / m_scale; }
 
 void LED::zeroCCR() { *m_CCR = 0; }
 

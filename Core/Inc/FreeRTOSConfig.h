@@ -28,8 +28,8 @@
  */
 /* USER CODE END Header */
 
-#ifndef FREERTOS_CONFIG_H
-#define FREERTOS_CONFIG_H
+#ifndef CORE_INC_FREERTOSCONFIG
+#define CORE_INC_FREERTOSCONFIG
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -44,7 +44,7 @@
  *----------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
-/* Section where include file can be added */
+
 /* USER CODE END Includes */
 
 /* Ensure definitions are only used by the compiler, and not by the assembler. */
@@ -133,7 +133,27 @@ standard names. */
 #define xPortSysTickHandler SysTick_Handler
 
 /* USER CODE BEGIN Defines */
-/* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
+
+
+
+#include "tim.h"								// Using 20kHz hardware timer
+#define configUSE_TRACE_FACILITY 1				// Show RTOS task ID stats
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1	// Enable using vTaskList()
+#define configRECORD_STACK_HIGH_ADDRESS 1		// Show RTOS stack stats
+#define configGENERATE_RUN_TIME_STATS 1
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() MX_TIM7_Init()
+#define portGET_RUN_TIME_COUNTER_VALUE() htim7.Instance->CNT
+
+/* NOTE:
+Add Those to MX_TIM7_Init()
+  __TIM7_CLK_ENABLE();
+  HAL_TIM_Base_Init(&htim7);
+  HAL_TIM_Base_Start(&htim7);
+*/
+
+
 /* USER CODE END Defines */
 
-#endif /* FREERTOS_CONFIG_H */
+
+
+#endif    /* CORE_INC_FREERTOSCONFIG */

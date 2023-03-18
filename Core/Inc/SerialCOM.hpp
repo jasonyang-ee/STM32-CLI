@@ -3,7 +3,6 @@
 
 #include "algorithm"
 #include "main.h"
-#include "stdio.h"
 #include "string"
 
 #ifndef UART_BUFFER

@@ -27,6 +27,7 @@ int main(void) {
 
     MX_GPIO_Init();
     MX_TIM2_Init();
+	MX_TIM7_Init();
     MX_USART2_UART_Init();
 
     HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_2);

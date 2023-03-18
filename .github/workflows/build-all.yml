@@ -1,4 +1,4 @@
-name: "Build Binary All"
+name: "Build Binary"
 on:
   push:
     branches:

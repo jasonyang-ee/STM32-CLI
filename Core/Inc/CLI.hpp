@@ -20,4 +20,4 @@ class CLI {
 	uint16_t m_cmd_size;
 };
 
-#endif /* CORE_INC_CLI */
+#endif    /* CORE_INC_CLI */

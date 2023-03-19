@@ -13,10 +13,19 @@ Credit to `lwshell`: https://github.com/MaJerle/lwshell
 
 ## 1.1. Build This Project
 
+- Docker Build
 ```
 docker run -v "{Your_Local_Full_Path}":"/home" jasonyangee/stm32_ubuntu:latest https://github.com/jasonyang-ee/STM32-CLI
 ```
 ![Run](doc/img/run.gif)
+
+
+- Manual Build
+```
+cmake -B build -G Ninja
+cmake --build build
+```
+
 
 ## 1.1. C++
 Project using C++ fake OOP method. Each feature class has attempted to be stand-alone where disabling each should not affect other's function. For example, LED class and Uart class can be enabled/disabled individually.

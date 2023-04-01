@@ -35,17 +35,17 @@ void Thread::parse() {
 }
 
 void Thread::app_1() {
+	int32_t hex_temp{0x80000};
     while (1) {
-        serialCOM.sendString("Tick: ");
-        serialCOM.sendNumber(HAL_GetTick());
-        serialCOM.sendLn();
+		hex_temp += 0x200;
+		serialCOM.sendNumber(hex_temp);
         vTaskDelay(5000);
     }
 }
 
 void Thread::app_2() {
     while (1) {
-        serialCOM.sendString("Here: ");
+        // serialCOM.sendString("Here: ");
         vTaskDelay(500);
     }
 }

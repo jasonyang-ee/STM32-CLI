@@ -1,7 +1,6 @@
 #include "main.h"
 
 // Driver
-#include "cmsis_os.h"
 #include "gpio.h"
 #include "instances.h"
 #include "tim.h"
@@ -40,6 +39,7 @@ int main(void) {
 
     // FreeRTOS Start
     vTaskStartScheduler();
+	
 
     while (1) {
     }

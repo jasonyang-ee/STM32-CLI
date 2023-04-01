@@ -1,5 +1,5 @@
-#ifndef CORE_INC_THREAD
-#define CORE_INC_THREAD
+#ifndef APPLICATION_INC_THREAD
+#define APPLICATION_INC_THREAD
 
 #include "main.h"
 #include "FreeRTOS.h"
@@ -26,4 +26,4 @@ class Thread {
     void serial_send();
 };
 
-#endif    /* CORE_INC_THREAD */
+#endif    /* APPLICATION_INC_THREAD */

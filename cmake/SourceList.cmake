@@ -1,15 +1,16 @@
-${PROJ_PATH}/Core/Inc/lwshell/lwshell.c
-${PROJ_PATH}/Core/Src/CLI.cpp
+set(source_list ${source_list}
+${PROJ_PATH}/Application/Inc/lwshell/lwshell.c
+${PROJ_PATH}/Application/Src/CLI.cpp
+${PROJ_PATH}/Application/Src/LED.cpp
+${PROJ_PATH}/Application/Src/main.cpp
+${PROJ_PATH}/Application/Src/SerialCOM.cpp
+${PROJ_PATH}/Application/Src/Thread.cpp
 ${PROJ_PATH}/Core/Src/gpio.c
-${PROJ_PATH}/Core/Src/LED.cpp
-${PROJ_PATH}/Core/Src/main.cpp
-${PROJ_PATH}/Core/Src/SerialCOM.cpp
 ${PROJ_PATH}/Core/Src/stm32l4xx_hal_msp.c
 ${PROJ_PATH}/Core/Src/stm32l4xx_hal_timebase_tim.c
 ${PROJ_PATH}/Core/Src/stm32l4xx_it.c
 ${PROJ_PATH}/Core/Src/syscalls.c
 ${PROJ_PATH}/Core/Src/system_stm32l4xx.c
-${PROJ_PATH}/Core/Src/Thread.cpp
 ${PROJ_PATH}/Core/Src/tim.c
 ${PROJ_PATH}/Core/Src/usart.c
 ${PROJ_PATH}/Core/startup_stm32l432kcux.s
@@ -32,8 +33,6 @@ ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c
 ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c
 ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c
 ${PROJ_PATH}/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c
-${PROJ_PATH}/
-${PROJ_PATH}/
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
@@ -44,3 +43,4 @@ ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/queue.c
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/timers.c
+)

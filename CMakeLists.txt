@@ -16,7 +16,7 @@ set(CMAKE_TOOLCHAIN_FILE			gcc-arm-none-eabi)
 
 
 # Project Name    --- MUST EDIT ---
-project(L432KC)
+project(L432-CLI)
 enable_language(C CXX ASM)
 
 # Linker File     --- MUST EDIT ---

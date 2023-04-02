@@ -30,5 +30,5 @@ sed -i '/./!d' cmake/IncludeList.cmake
 sed -i 's/^/${PROJ_PATH}\//' cmake/IncludeList.cmake
 
 # Struct cmake format
-sed -i '1 i\set(include_list  ${include_list}' cmake/IncludeList.cmake
+sed -i '1 i\set(include_list ${include_list}' cmake/IncludeList.cmake
 sed -i -e '$a)' cmake/IncludeList.cmake

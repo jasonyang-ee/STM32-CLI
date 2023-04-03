@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
+			"type": "shell",
 			"label": "Build Project",
 			"command": "cmake",
 			"args": [
@@ -46,6 +46,21 @@
 				"port=swd",
 				"--download",
 				"${command:cmake.launchTargetPath}",
+				"-rst",
+				"-run"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "Windows: Reset Device",
+			"command": "STM32_Programmer_CLI",
+			"args": [
+				"--connect",
+				"port=swd",
 				"-rst",
 				"-run"
 			],
